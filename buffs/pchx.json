@@ -1,5 +1,14 @@
 [
   {
+    "BuffType": "SkillRate",
+    "Chance": 1,
+    "Delay": 1,
+    "Duration": 300,
+    "Value": 15,
+    "AbsoluteValue": true,
+    "SkillName": "Strength"
+  },
+  {
     "AbsoluteValue": true,
     "BuffType": "HydrationRate",
     "Chance": 1,
