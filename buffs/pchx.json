@@ -1,0 +1,29 @@
+[
+  {
+    "AbsoluteValue": true,
+    "BuffType": "HydrationRate",
+    "Chance": 1,
+    "Delay": 306,
+    "Duration": 3,
+    "SkillName": "",
+    "Value": -20
+  },
+  {
+    "AbsoluteValue": true,
+    "BuffType": "HandsTremor",
+    "Chance": 1,
+    "Delay": 306,
+    "Duration": 60,
+    "SkillName": "",
+    "Value": 0
+  },
+  {
+    "AbsoluteValue": true,
+    "BuffType": "QuantumTunnelling",
+    "Chance": 1,
+    "Delay": 306,
+    "Duration": 20,
+    "SkillName": "",
+    "Value": 0
+  }
+]
