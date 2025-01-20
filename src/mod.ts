@@ -3,23 +3,29 @@ import { DependencyContainer } from "tsyringe";
 
 import { IPostDBLoadMod } from "@spt/models/external/IPostDBLoadMod";
 import { DatabaseServer } from "@spt/servers/DatabaseServer";
-import { ILogger } from "@spt/models/spt/utils/ILogger";
-import { LogTextColor } from "@spt/models/spt/logging/LogTextColor";
+import { ILogger }        from "@spt/models/spt/utils/ILogger";
+import { LogTextColor }   from "@spt/models/spt/logging/LogTextColor";
 
-import { Traders } from "@spt/models/enums/Traders";
+import { Traders }  from "@spt/models/enums/Traders";
+import { Money }    from "@spt/models/enums/Money";
+import { ItemTpl }  from "@spt/models/enums/ItemTpl";
 
 import { FluentAssortConstructor as FluentAssortCreator } from "./fluentTraderAssortCreator";
-import { ItemTpl } from "@spt/models/enums/ItemTpl";
-import { HashUtil } from "@spt/utils/HashUtil";
+
+import { HashUtil }       from "@spt/utils/HashUtil";
 import { IPreSptLoadMod } from "@spt/models/external/IPreSptLoadMod";
 
-import { CustomItemService } from "@spt/services/mod/CustomItemService";
-import { IDatabaseTables } from "@spt/models/spt/server/IDatabaseTables";
+import { CustomItemService }       from "@spt/services/mod/CustomItemService";
+import { IDatabaseTables }         from "@spt/models/spt/server/IDatabaseTables";
 import { NewItemFromCloneDetails } from "@spt/models/spt/mod/NewItemDetails";
 
-import sj18 from "../buffs/sj18.json";
+import config from "../config/config.json";
+
+import sj18  from "../buffs/sj18.json";
 import pnl17 from "../buffs/pnl17.json";
-import pchx from "../buffs/pchx.json";
+import pchx  from "../buffs/pchx.json";
+import vnk11 from "../buffs/vnk11.json";
+
 
 // -----------------------------
 class Mod implements IPostDBLoadMod, IPreSptLoadMod 
@@ -110,6 +116,7 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
         buffs["BuffsSJ18TGLabs"] = sj18;
         buffs["BuffsPNL17"] = pnl17;
         buffs["BuffsPCHX"] = pchx;
+        buffs["BuffsVNK11"] = vnk11;
 
         createStim(
             "5c0e531286f7747fa54205c2",
@@ -164,6 +171,20 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
     
         }
 
+        createStim(
+            "5ed5166ad380ab312177c100", 
+            0.07, 
+            "678e99cd6d02d098f43a1bc1", 
+            100000, 
+            "BuffsVNK11", 
+            100000, 
+            "5448f3a64bdc2d60728b456a", 
+            "VNK-11 stimulant injector", 
+            "VNK-11", 
+            "A clandestine stimulant that alleviates extreme exhaustion. Prolonged use increases the risk of severe internal bleeding and make the user unable to run "
+        )
+
+
         // Add SJ18 TGLabs combat stimulant injector to Therapist LL2
         this.fluentAssortCreator
             .createSingleAssortItem("678bff0962756d2aaf75dfb1")
@@ -180,7 +201,6 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
             .addLoyaltyLevel(2)
             .export(tables.traders[Traders.SKIER]);
 
-
         // Add PCH-X (Pain Control Hybrid) stimulant injector to Therapist LL2
         this.fluentAssortCreator
             .createSingleAssortItem("678e8c0b146703008d8f40f6")
@@ -189,6 +209,50 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
             .addBarterCost(ItemTpl.DRUGS_MORPHINE_INJECTOR, 1)
             .addLoyaltyLevel(2)
             .export(tables.traders[Traders.THERAPIST]);
+
+        // Add VNK-11 stimulant injector to Skier LL3
+        this.fluentAssortCreator
+            .createSingleAssortItem("678e99cd6d02d098f43a1bc1")
+            .addStackCount(2)
+            .addBarterCost(ItemTpl.STIM_OBDOLBOS_COCKTAIL_INJECTOR, 1)
+            .addBarterCost(ItemTpl.DRINK_BOTTLE_OF_PEVKO_LIGHT_BEER, 1)
+            .addLoyaltyLevel(3)
+            .export(tables.traders[Traders.SKIER]);
+
+        if(config.debug){
+            // For testing purposes
+            // Add SJ18 TGLabs combat stimulant injector to Therapist LL2
+            this.fluentAssortCreator
+                .createSingleAssortItem("678bff0962756d2aaf75dfb1")
+                .addStackCount(1234)
+                .addMoneyCost(Money.ROUBLES, 1)
+                .addLoyaltyLevel(1)
+                .export(tables.traders[Traders.THERAPIST]);
+
+            // Add PNL (Product 17) stimulant injector to Skier LL2
+            this.fluentAssortCreator
+                .createSingleAssortItem("678c0fe60e412b43e3325e82")
+                .addStackCount(1234)
+                .addMoneyCost(Money.ROUBLES, 1)
+                .addLoyaltyLevel(1)
+                .export(tables.traders[Traders.SKIER]);
+
+            // Add PCH-X (Pain Control Hybrid) stimulant injector to Therapist LL2
+            this.fluentAssortCreator
+                .createSingleAssortItem("678e8c0b146703008d8f40f6")
+                .addStackCount(1234)
+                .addMoneyCost(Money.ROUBLES, 1)
+                .addLoyaltyLevel(1)
+                .export(tables.traders[Traders.THERAPIST]);
+
+            // Add VNK-11 stimulant injector to Skier LL3
+            this.fluentAssortCreator
+                .createSingleAssortItem("678e99cd6d02d098f43a1bc1")
+                .addStackCount(1234)
+                .addMoneyCost(Money.ROUBLES, 1)
+                .addLoyaltyLevel(1)
+                .export(tables.traders[Traders.SKIER]);
+        }
         
         this.logger.logWithColor(
             `[ViniHNS] ${this.mod} - Database Loaded`,
