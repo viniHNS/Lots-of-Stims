@@ -180,6 +180,15 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
             .addLoyaltyLevel(2)
             .export(tables.traders[Traders.SKIER]);
 
+
+        // Add PCH-X (Pain Control Hybrid) stimulant injector to Therapist LL2
+        this.fluentAssortCreator
+            .createSingleAssortItem("678e8c0b146703008d8f40f6")
+            .addStackCount(2)
+            .addBarterCost(ItemTpl.STIM_ADRENALINE_INJECTOR, 1)
+            .addBarterCost(ItemTpl.DRUGS_MORPHINE_INJECTOR, 1)
+            .addLoyaltyLevel(2)
+            .export(tables.traders[Traders.THERAPIST]);
         
         this.logger.logWithColor(
             `[ViniHNS] ${this.mod} - Database Loaded`,
