@@ -6,9 +6,12 @@ import { DatabaseServer } from "@spt/servers/DatabaseServer";
 import { ILogger }        from "@spt/models/spt/utils/ILogger";
 import { LogTextColor }   from "@spt/models/spt/logging/LogTextColor";
 
-import { Traders }  from "@spt/models/enums/Traders";
-import { Money }    from "@spt/models/enums/Money";
-import { ItemTpl }  from "@spt/models/enums/ItemTpl";
+import { Traders }     from "@spt/models/enums/Traders";
+import { Money }       from "@spt/models/enums/Money";
+import { ItemTpl }     from "@spt/models/enums/ItemTpl";
+import { BaseClasses } from "@spt/models/enums/BaseClasses";
+
+import { ItemHelper } from "@spt/helpers/ItemHelper";
 
 import { FluentAssortConstructor as FluentAssortCreator } from "./fluentTraderAssortCreator";
 
@@ -45,6 +48,7 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
         const hashUtil: HashUtil = container.resolve<HashUtil>("HashUtil");
         this.logger = container.resolve<ILogger>("WinstonLogger");
         this.fluentAssortCreator = new FluentAssortCreator(hashUtil, this.logger);
+        this.logger.logWithColor("[ViniHNS] Lots of Stims loading!", LogTextColor.GREEN);
     }
 
     public postDBLoad(container: DependencyContainer): void 
@@ -53,8 +57,10 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
         const databaseServer = container.resolve<DatabaseServer>("DatabaseServer");
 
         // Resolve the CustomItemService container
-        const CustomItem =
-            container.resolve<CustomItemService>("CustomItemService");
+        const CustomItem = container.resolve<CustomItemService>("CustomItemService");
+
+        // Resolve the ItemHelper container
+        const itemHelper = container.resolve<ItemHelper>("ItemHelper");
 
         // Get all the in-memory json found in /assets/database
         const tables: IDatabaseTables = databaseServer.getTables();
@@ -253,7 +259,14 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
                 .addLoyaltyLevel(1)
                 .export(tables.traders[Traders.SKIER]);
         }
-        
+
+        const item = Object.values(tables.templates.items);
+        const allStims = item.filter(x => itemHelper.isOfBaseclass(x._id, BaseClasses.STIMULATOR));
+
+        for(const stim of allStims){
+            stim._props.MaxHpResource = config.stimUses;
+        }
+
         this.logger.logWithColor(
             `[ViniHNS] ${this.mod} - Database Loaded`,
             LogTextColor.GREEN
