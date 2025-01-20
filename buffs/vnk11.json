@@ -1,0 +1,47 @@
+[
+  {
+    "BuffType": "SkillRate",
+    "Chance": 1,
+    "Delay": 1,
+    "Duration": 300,
+    "Value": 15,
+    "AbsoluteValue": true,
+    "SkillName": "Strength"
+  },
+  {
+    "AbsoluteValue": true,
+    "BuffType": "HydrationRate",
+    "Chance": 1,
+    "Delay": 1,
+    "Duration": 240,
+    "SkillName": "",
+    "Value": 2
+  },
+  {
+    "AbsoluteValue": true,
+    "BuffType": "EnergyRate",
+    "Chance": 1,
+    "Delay": 1,
+    "Duration": 240,
+    "SkillName": "",
+    "Value": 2
+  },
+  {
+    "AbsoluteValue": true,
+    "BuffType": "HandsTremor",
+    "Chance": 1,
+    "Delay": 246,
+    "Duration": 120,
+    "SkillName": "",
+    "Value": 0
+  },
+  {
+    "AbsoluteValue": true,
+    "BuffType": "QuantumTunnelling",
+    "Chance": 1,
+    "Delay": 260,
+    "Duration": 20,
+    "SkillName": "",
+    "Value": 0
+  }
+]
