@@ -9,6 +9,15 @@
     "SkillName": "Strength"
   },
   {
+    "BuffType": "StaminaRate",
+    "Chance": 1,
+    "Delay": 1,
+    "Duration": 30,
+    "Value": 5,
+    "AbsoluteValue": true,
+    "SkillName": ""
+  },
+  {
     "AbsoluteValue": true,
     "BuffType": "HydrationRate",
     "Chance": 1,
