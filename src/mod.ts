@@ -29,7 +29,6 @@ import pnl17 from "../buffs/pnl17.json";
 import pchx  from "../buffs/pchx.json";
 import vnk11 from "../buffs/vnk11.json";
 
-
 // -----------------------------
 class Mod implements IPostDBLoadMod, IPreSptLoadMod 
 {
@@ -110,14 +109,18 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
                         shortName: locales_shortName,
                         description: locales_description
                     }
+
                 }
+
             };
 
             CustomItem.createItemFromClone(ExampleCloneItem); //Basically calls the function and tell the server to add our Cloned new item into the server
         }
 
-        const buffs = tables.globals.config.Health.Effects.Stimulator.Buffs;
         // ---------------------------------------------------
+        // Create the stim buffs
+        const buffs = tables.globals.config.Health.Effects.Stimulator.Buffs;
+        
 
         buffs["BuffsSJ18TGLabs"] = sj18;
         buffs["BuffsPNL17"] = pnl17;
@@ -271,7 +274,9 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
             `[ViniHNS] ${this.mod} - Database Loaded`,
             LogTextColor.GREEN
         );
+
     }
+
 }
 
 export const mod = new Mod();
