@@ -19,6 +19,7 @@ import { NewItemFromCloneDetails } from "@spt/models/spt/mod/NewItemDetails";
 
 import sj18 from "../buffs/sj18.json";
 import pnl17 from "../buffs/pnl17.json";
+import pchx from "../buffs/pchx.json";
 
 // -----------------------------
 class Mod implements IPostDBLoadMod, IPreSptLoadMod 
@@ -47,7 +48,7 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
 
         // Resolve the CustomItemService container
         const CustomItem =
-      container.resolve<CustomItemService>("CustomItemService");
+            container.resolve<CustomItemService>("CustomItemService");
 
         // Get all the in-memory json found in /assets/database
         const tables: IDatabaseTables = databaseServer.getTables();
@@ -108,6 +109,7 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
 
         buffs["BuffsSJ18TGLabs"] = sj18;
         buffs["BuffsPNL17"] = pnl17;
+        buffs["BuffsPCHX"] = pchx;
 
         createStim(
             "5c0e531286f7747fa54205c2",
@@ -135,6 +137,33 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
             "Derived from PNB research, this stimulant accelerates metabolism to boost adrenaline for extreme situations, with a risk of severe dehydration, and legs destruction"
         );
 
+        createStim(
+            "5ed51652f6c34d2cc26336a1", 
+            0.08, 
+            "678e8c0b146703008d8f40f6", 
+            90000, 
+            "BuffsPCHX", 
+            90000, 
+            "5448f3a64bdc2d60728b456a", 
+            "PCH-X (Pain Control Hybrid) stimulant injector", 
+            "PCH-X", 
+            "A hybrid mixture for enhanced focus and pain reduction during extended missions. Side effects include reduced auditory perception and thirst"
+        );
+
+        tables.templates.items["678e8c0b146703008d8f40f6"]._props.effects_damage = { 
+            "Contusion": {
+                "delay": 0,
+                "duration": 300,
+                "fadeOut": 0
+            },
+            "Pain": {
+                "delay": 0,
+                "duration": 300,
+                "fadeOut": 5
+            }
+    
+        }
+
         // Add SJ18 TGLabs combat stimulant injector to Therapist LL2
         this.fluentAssortCreator
             .createSingleAssortItem("678bff0962756d2aaf75dfb1")
@@ -151,6 +180,7 @@ class Mod implements IPostDBLoadMod, IPreSptLoadMod
             .addLoyaltyLevel(2)
             .export(tables.traders[Traders.SKIER]);
 
+        
         this.logger.logWithColor(
             `[ViniHNS] ${this.mod} - Database Loaded`,
             LogTextColor.GREEN
